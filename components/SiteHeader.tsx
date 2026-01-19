@@ -7,23 +7,17 @@ export default async function SiteHeader() {
   const role = session?.user?.role;
 
   return (
-    <header className="border-b border-black/10 bg-white/70 backdrop-blur dark:bg-black/50 dark:border-white/10">
+    <header className="border-b border-black/10 bg-blue-800 backdrop-blur dark:bg-blue-900 dark:border-white/10">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
+          <Link href="/" className="text-lg font-semibold tracking-tight text-white">
             GamScholar
           </Link>
-          <nav className="hidden gap-4 text-sm text-zinc-600 sm:flex dark:text-zinc-300">
-            <Link
-              href="/scholarships"
-              className="hover:text-black dark:hover:text-white"
-            >
+          <nav className="hidden gap-4 text-sm text-white sm:flex">
+            <Link href="/scholarships" className="hover:text-blue-200">
               Scholarships
             </Link>
-            <Link
-              href="/about"
-              className="hover:text-black dark:hover:text-white"
-            >
+            <Link href="/about" className="hover:text-blue-200">
               About
             </Link>
           </nav>
@@ -34,13 +28,13 @@ export default async function SiteHeader() {
             <>
               <Link
                 href="/dashboard"
-                className="rounded-full border border-black/10 px-4 py-2 hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+                className="rounded-full border border-white/20 px-4 py-2 hover:bg-white/10 text-white"
               >
                 Dashboard{role ? ` (${role.toLowerCase()})` : ""}
               </Link>
               <Link
                 href="/logout"
-                className="rounded-full bg-black px-4 py-2 text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+                className="rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20"
               >
                 Logout
               </Link>
@@ -49,13 +43,13 @@ export default async function SiteHeader() {
             <>
               <Link
                 href="/auth/login"
-                className="rounded-full border border-black/10 px-4 py-2 hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+                className="rounded-full border border-white/20 px-4 py-2 hover:bg-white/10 text-white"
               >
                 Login
               </Link>
               <Link
                 href="/auth/signup"
-                className="rounded-full bg-black px-4 py-2 text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+                className="rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20"
               >
                 Sign up
               </Link>
