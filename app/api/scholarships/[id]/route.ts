@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { jsonError, requireRole } from "@/lib/rbac";
@@ -42,7 +43,7 @@ export async function PATCH(
 
     const data = parsed.data;
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.scholarship.update({
         where: { id },
         data: {
