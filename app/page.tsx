@@ -15,14 +15,12 @@ export default async function Home() {
 
   return (
     <div className="space-y-10">
-      <section className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-black">
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Scholarships, made clear.
+      <section className="rounded-3xl border border-blue-100 bg-white p-8 shadow-sm dark:border-blue-900 dark:bg-slate-900">
+        <h1 className="text-3xl font-semibold tracking-tight text-blue-900 sm:text-4xl dark:text-blue-100">
+          Find Scholarships That Match You
         </h1>
-        <p className="mt-3 max-w-2xl text-zinc-600 dark:text-zinc-400">
-          Discover verified scholarships for Gambian students studying locally
-          or abroad. Donors can create scholarships, students can apply
-          step-by-step, and admins keep it trustworthy.
+        <p className="mt-3 max-w-2xl text-blue-700 dark:text-blue-300">
+          Discover Funding For Gambian Students
         </p>
 
         <form
@@ -37,7 +35,7 @@ export default async function Home() {
           />
           <button
             type="submit"
-            className="h-12 rounded-2xl bg-black px-6 font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+            className="h-12 rounded-2xl bg-blue-600 px-6 font-medium text-white hover:bg-blue-700 dark:bg-blue-500 dark:text-white dark:hover:bg-blue-400"
           >
             Search
           </button>
