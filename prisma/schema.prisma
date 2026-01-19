@@ -1,0 +1,147 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+enum Role {
+    STUDENT
+    DONOR
+    ADMIN
+}
+
+enum ScholarshipStatus {
+    DRAFT
+    PENDING_REVIEW
+    PUBLISHED
+    UNPUBLISHED
+    RESTRICTED
+}
+
+enum ApplicationStatus {
+    DRAFT
+    SUBMITTED
+    UNDER_REVIEW
+    ACCEPTED
+    REJECTED
+    WITHDRAWN
+}
+
+enum DocumentKind {
+    PDF
+    IMAGE
+    OTHER
+}
+
+model User {
+    id           String  @id @default(cuid())
+    email        String  @unique
+    name         String?
+    role         Role    @default(STUDENT)
+    passwordHash String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    scholarships Scholarship[]     @relation("DonorScholarships")
+    saved        ScholarshipSave[]
+    applications Application[]
+
+    @@index([role])
+}
+
+model Scholarship {
+    id      String @id @default(cuid())
+    donorId String
+    donor   User   @relation("DonorScholarships", fields: [donorId], references: [id])
+
+    title       String
+    amountGmd   Int
+    degree      String
+    field       String
+    description String
+    deadline    DateTime?
+
+    status   ScholarshipStatus @default(DRAFT)
+    featured Boolean           @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    eligibility  ScholarshipEligibility[]
+    savedBy      ScholarshipSave[]
+    applications Application[]
+
+    @@index([status])
+    @@index([featured])
+    @@index([donorId])
+}
+
+model ScholarshipEligibility {
+    id            String      @id @default(cuid())
+    scholarshipId String
+    scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+    text  String
+    order Int
+
+    @@unique([scholarshipId, order])
+}
+
+model ScholarshipSave {
+    id            String      @id @default(cuid())
+    scholarshipId String
+    scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@unique([studentId, scholarshipId])
+    @@index([scholarshipId])
+}
+
+model Application {
+    id            String      @id @default(cuid())
+    scholarshipId String
+    scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+    status      ApplicationStatus @default(DRAFT)
+    currentStep Int               @default(1)
+
+    // step-by-step persisted form state
+    stepData Json @default("{}")
+
+    submittedAt DateTime?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    documents ApplicationDocument[]
+
+    @@unique([studentId, scholarshipId])
+    @@index([status])
+    @@index([scholarshipId])
+    @@index([studentId])
+}
+
+model ApplicationDocument {
+    id            String      @id @default(cuid())
+    applicationId String
+    application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+    kind     DocumentKind @default(OTHER)
+    filename String
+    mimeType String
+    base64   String       @db.Text
+
+    createdAt DateTime @default(now())
+
+    @@index([applicationId])
+}
