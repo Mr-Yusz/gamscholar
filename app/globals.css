@@ -2,8 +2,8 @@
 
 :root {
   /* Background & text */
-  --background: #ffffff; /* primary page background (white) */
-  --foreground: #0f172a; /* deep navy text for contrast on white */
+  --background: var(--primary-500); /* page background: blue */
+  --foreground: #ffffff; /* white text for contrast on blue */
 
   /* Primary (shades of blue) */
   --primary-50: #f0f9ff;
@@ -32,7 +32,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #021524; /* deep navy background */
+    --background: var(--primary-700); /* darker blue background for dark mode */
     --foreground: #e6f6ff; /* near-white with blue tint */
 
     --primary-50: #031b2b;
