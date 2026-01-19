@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background & text */
+  --background: #ffffff; /* primary page background (white) */
+  --foreground: #0f172a; /* deep navy text for contrast on white */
+
+  /* Primary (shades of blue) */
+  --primary-50: #f0f9ff;
+  --primary-100: #e6f6ff;
+  --primary-200: #cfeefe;
+  --primary-300: #93d7ff;
+  --primary-400: #60a5fa;
+  --primary-500: #0284c7; /* main brand blue */
+  --primary-600: #0369a1;
+  --primary-700: #075985;
+
+  /* Muted / surfaces */
+  --muted: #eef6ff;
+  --card-bg: #ffffff;
+
+  /* Accents */
+  --accent: var(--primary-500);
 }
 
 @theme inline {
@@ -14,8 +32,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #f1f5f9;
+    --background: #021524; /* deep navy background */
+    --foreground: #e6f6ff; /* near-white with blue tint */
+
+    --primary-50: #031b2b;
+    --primary-100: #053048;
+    --primary-200: #0a4b6f;
+    --primary-300: #1b6b9e;
+    --primary-400: #297ab6;
+    --primary-500: #4ea8ff; /* lighter primary for contrast */
+    --primary-600: #4aa3ff;
+    --primary-700: #2b6fb3;
+
+    --muted: #041426;
+    --card-bg: #041a2b;
+    --accent: var(--primary-500);
   }
 }
 
@@ -24,3 +55,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Basic elements using the new palette */
+a { color: var(--accent); }
+button, .btn { background-color: var(--primary-500); color: white; }
+.muted { color: var(--muted); }
+.card { background: var(--card-bg); }
