@@ -9,16 +9,14 @@ export default async function SignupPage() {
   if (session?.user) redirect("/dashboard");
 
   return (
-    <div className="mx-auto max-w-md rounded-3xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-black">
-      <h1 className="text-2xl font-semibold">Sign up</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Create a student or donor account.
-      </p>
+    <div className="mx-auto max-w-md rounded-3xl border border-transparent bg-blue-500 p-8 shadow-sm text-white dark:bg-blue-700">
+      <h1 className="text-2xl font-semibold text-white">Sign up</h1>
+      <p className="mt-2 text-sm text-white/90">Create a student or donor account.</p>
       <SignupForm />
 
-      <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-6 text-sm text-white/90">
         Already have an account?{" "}
-        <Link href="/auth/login" className="font-medium hover:underline">
+        <Link href="/auth/login" className="font-medium underline-offset-2 hover:underline text-white">
           Login
         </Link>
         .

@@ -9,16 +9,14 @@ export default async function LoginPage() {
   if (session?.user) redirect("/dashboard");
 
   return (
-    <div className="mx-auto max-w-md rounded-3xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-black">
-      <h1 className="text-2xl font-semibold">Login</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Welcome back.
-      </p>
+    <div className="mx-auto max-w-md rounded-3xl border border-transparent bg-blue-600 p-8 shadow-sm text-white dark:bg-blue-700">
+      <h1 className="text-2xl font-semibold text-white">Login</h1>
+      <p className="mt-2 text-sm text-white/90">Welcome back.</p>
       <LoginForm />
 
-      <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-6 text-sm text-white/90">
         New here?{" "}
-        <Link href="/auth/signup" className="font-medium hover:underline">
+        <Link href="/auth/signup" className="font-medium underline-offset-2 hover:underline text-white">
           Create an account
         </Link>
         .

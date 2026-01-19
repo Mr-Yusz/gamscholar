@@ -2,8 +2,8 @@
 
 :root {
   /* Background & text */
-  --background: var(--primary-500); /* page background: blue */
-  --foreground: #ffffff; /* white text for contrast on blue */
+  --background: #ffffff; /* page background: white */
+  --foreground: #0f172a; /* dark foreground on white */
 
   /* Primary (shades of blue) */
   --primary-50: #f0f9ff;
