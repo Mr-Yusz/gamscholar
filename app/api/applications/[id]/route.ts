@@ -6,7 +6,7 @@ import { jsonError, requireRole } from "@/lib/rbac";
 
 const patchSchema = z.object({
   currentStep: z.number().int().min(1).max(4).optional(),
-  stepData: z.record(z.any()).optional(),
+  stepData: z.record(z.string(), z.any()).optional(),
 });
 
 export async function PATCH(

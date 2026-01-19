@@ -5,8 +5,8 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const featured = prisma.scholarship.findMany({
+export default async function Home() {
+  const featured = await prisma.scholarship.findMany({
     where: { status: "PUBLISHED", featured: true },
     include: { donor: { select: { name: true, email: true } } },
     orderBy: { updatedAt: "desc" },
@@ -55,31 +55,18 @@ export default function Home() {
           </Link>
         </div>
 
-        <FeaturedSection featuredPromise={featured} />
+        {featured.length === 0 ? (
+          <div className="mt-4 rounded-2xl border border-black/10 bg-white p-6 text-sm text-zinc-600 dark:border-white/10 dark:bg-black dark:text-zinc-400">
+            No featured scholarships yet.
+          </div>
+        ) : (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((s) => (
+              <ScholarshipCard key={s.id} scholarship={s} />
+            ))}
+          </div>
+        )}
       </section>
-    </div>
-  );
-}
-
-async function FeaturedSection({
-  featuredPromise,
-}: {
-  featuredPromise: ReturnType<typeof prisma.scholarship.findMany>;
-}) {
-  const featured = await featuredPromise;
-  if (featured.length === 0) {
-    return (
-      <div className="mt-4 rounded-2xl border border-black/10 bg-white p-6 text-sm text-zinc-600 dark:border-white/10 dark:bg-black dark:text-zinc-400">
-        No featured scholarships yet.
-      </div>
-    );
-  }
-
-  return (
-    <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {featured.map((s) => (
-        <ScholarshipCard key={s.id} scholarship={s} />
-      ))}
     </div>
   );
 }
