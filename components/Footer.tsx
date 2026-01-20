@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Join our newsletter</div>
+            <div className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Join our newletter</div>
             <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Get curated scholarship alerts and application tips.</p>
 
             <form className="mt-4 flex max-w-sm gap-2" onSubmit={(e) => e.preventDefault()}>
