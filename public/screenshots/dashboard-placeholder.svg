@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="#075985"/>
+  <rect x="100" y="80" width="1000" height="540" rx="16" fill="#ffffff" />
+  <text x="600" y="360" font-family="Arial, Helvetica, sans-serif" font-size="36" fill="#075985" text-anchor="middle">Dashboard Screenshot Placeholder</text>
+</svg>

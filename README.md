@@ -39,6 +39,29 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ### Overview
 
+### Screenshots
+
+Below are example screenshots. Replace the images in `public/screenshots/` with real captures from the app to update these previews.
+
+- Login page:
+
+	![Login Screenshot](public/screenshots/login-placeholder.svg)
+
+- Signup page:
+
+	![Signup Screenshot](public/screenshots/signup-placeholder.svg)
+
+- Dashboard:
+
+	![Dashboard Screenshot](public/screenshots/dashboard-placeholder.svg)
+
+To capture and add screenshots:
+
+1. Open the deployed app at https://gamscholar.vercel.app/auth/login (or your local `npm run dev` URL).
+2. Use your OS screenshot tool or browser devtools to capture the desired area.
+3. Save the images to `public/screenshots/` (recommended PNG, 1200×700 for consistency).
+4. Commit and push the images to update the README previews.
+
 GamScholar is a Next.js application for managing scholarships. Users may browse scholarships, students can apply, donors can create scholarships, and admins manage listings and application status.
 
 ### Installation
