@@ -37,6 +37,18 @@ export default async function ScholarshipDetailsPage({
 
   const isStudent = role === "STUDENT";
   const canApply = isStudent && scholarship.status === "PUBLISHED";
+  let existingApplication: { id: string; status: string } | null = null;
+  if (isStudent && session?.user?.id) {
+    existingApplication = await prisma.application.findUnique({
+      where: {
+        studentId_scholarshipId: {
+          studentId: session.user.id,
+          scholarshipId: scholarship.id,
+        },
+      },
+      select: { id: true, status: true },
+    });
+  }
 
   const initialSaved =
     isStudent && session?.user?.id
@@ -79,17 +91,36 @@ export default async function ScholarshipDetailsPage({
               />
             ) : null}
 
-            {canApply ? (
-              <Link
-                href={`/scholarships/${scholarship.id}/apply`}
-                className="rounded-2xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
-              >
-                Apply
-              </Link>
-            ) : session?.user ? (
-              <span className="rounded-2xl bg-black/5 px-4 py-2 text-sm text-zinc-700 dark:bg-white/10 dark:text-zinc-200">
-                Applications available for students
-              </span>
+            {isStudent && session?.user ? (
+              existingApplication ? (
+                // If application is a draft, let student continue; otherwise let them track
+                existingApplication.status === "DRAFT" ? (
+                  <Link
+                    href={`/scholarships/${scholarship.id}/apply`}
+                    className="rounded-2xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+                  >
+                    Continue application
+                  </Link>
+                ) : (
+                  <Link
+                    href="/dashboard/student"
+                    className="rounded-2xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+                  >
+                    Track application
+                  </Link>
+                )
+              ) : canApply ? (
+                <Link
+                  href={`/scholarships/${scholarship.id}/apply`}
+                  className="rounded-2xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
+                >
+                  Apply
+                </Link>
+              ) : (
+                <span className="rounded-2xl bg-black/5 px-4 py-2 text-sm text-zinc-700 dark:bg-white/10 dark:text-zinc-200">
+                  Applications available for students
+                </span>
+              )
             ) : (
               <Link
                 href="/auth/login"

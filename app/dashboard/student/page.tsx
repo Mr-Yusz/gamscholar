@@ -111,10 +111,10 @@ export default async function StudentDashboard() {
                   </div>
                   <div className="flex gap-2">
                     <Link
-                      href={`/scholarships/${app.scholarshipId}`}
+                      href={`/dashboard/student/applications/${app.id}`}
                       className="rounded-2xl border border-black/10 px-4 py-2 text-sm font-medium hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10"
                     >
-                      View scholarship
+                      Track Application
                     </Link>
                     {app.status === "DRAFT" ? (
                       <Link

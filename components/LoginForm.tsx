@@ -2,12 +2,14 @@
 
 import { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   return (
     <form
@@ -19,11 +21,16 @@ export default function LoginForm() {
           const res = await signIn("credentials", {
             email,
             password,
-            redirect: true,
+            redirect: false,
             callbackUrl: "/dashboard",
           });
 
-          if (res?.error) setError("Invalid email or password");
+          if (res?.error) {
+            setError("Invalid email or password");
+            return;
+          }
+
+          router.push("/dashboard");
         });
       }}
     >

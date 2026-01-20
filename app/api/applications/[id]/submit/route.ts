@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 import { jsonError, requireRole } from "@/lib/rbac";
+import { sendSubmissionEmail } from "@/lib/email";
 
 export async function POST(
   _req: Request,
@@ -46,16 +47,35 @@ export async function POST(
       );
     }
 
-    await prisma.application.update({
+    const updated = await prisma.application.update({
       where: { id },
       data: {
         status: "SUBMITTED",
         submittedAt: new Date(),
         currentStep: 4,
       },
+      include: { scholarship: { select: { id: true, title: true, donorId: true } }, student: { select: { id: true, name: true, email: true } } },
     });
 
-    return NextResponse.json({ ok: true });
+    // notify donor (if present)
+    try {
+      const donorId = updated.scholarship?.donorId;
+      if (donorId) {
+        const donor = await prisma.user.findUnique({ where: { id: donorId }, select: { email: true, name: true } });
+        if (donor?.email) {
+          await sendSubmissionEmail({
+            to: donor.email,
+            studentName: updated.student?.name ?? null,
+            scholarshipId: updated.scholarship?.id ?? null,
+            scholarshipTitle: updated.scholarship?.title ?? null,
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Failed to send submission email to donor", err);
+    }
+
+    return NextResponse.json({ ok: true, application: { id } });
   } catch (err) {
     return jsonError(err);
   }

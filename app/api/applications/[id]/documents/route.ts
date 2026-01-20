@@ -63,3 +63,41 @@ export async function POST(
     return jsonError(err);
   }
 }
+
+export async function GET(
+  _req: Request,
+  ctx: { params: Promise<{ id: string }> },
+) {
+  try {
+    const session = await requireRole(["ADMIN", "DONOR"]);
+    const { id } = await ctx.params;
+
+    const application = await prisma.application.findUnique({
+      where: { id },
+      include: { scholarship: { select: { donorId: true } } },
+    });
+    if (!application)
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+    // donors can only see docs for their scholarships
+    if (session.user.role === "DONOR" && session.user.id !== application.scholarship.donorId) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const docs = await prisma.applicationDocument.findMany({
+      where: { applicationId: id },
+      select: { id: true, filename: true, mimeType: true, kind: true, base64: true },
+      orderBy: { createdAt: "asc" },
+    });
+
+    // include student-entered application data so donors can review answers
+    const appForDonor = await prisma.application.findUnique({
+      where: { id },
+      select: { id: true, status: true, stepData: true, student: { select: { name: true, email: true } } },
+    });
+
+    return NextResponse.json({ documents: docs, application: appForDonor });
+  } catch (err) {
+    return jsonError(err);
+  }
+}

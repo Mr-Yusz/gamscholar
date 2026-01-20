@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import ApplicationRowActions from '../../../../../../components/ApplicationRowActions';
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 
@@ -81,6 +82,9 @@ export default async function ApplicantsPage({
 
                 <div className="text-xs text-zinc-600 dark:text-zinc-400">
                   Application ID: {a.id}
+                </div>
+                <div className="px-4 py-3 text-sm text-zinc-700">
+                  <ApplicationRowActions applicationId={a.id} />
                 </div>
               </div>
             </div>

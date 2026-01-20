@@ -1,5 +1,10 @@
 {
     "chat.tools.terminal.autoApprove": {
         "git rev-parse": true
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#133416",
+        "titleBar.activeBackground": "#1B491E",
+        "titleBar.activeForeground": "#F7FCF8"
     }
 }

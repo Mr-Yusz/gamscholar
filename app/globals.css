@@ -61,3 +61,41 @@ a { color: var(--accent); }
 button, .btn { background-color: var(--primary-500); color: white; }
 .muted { color: var(--muted); }
 .card { background: var(--card-bg); }
+
+/* UI enhancements and utility classes for header/footer */
+:root {
+  --glass: rgba(255,255,255,0.06);
+  --glass-2: rgba(255,255,255,0.03);
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+/* subtle page gradient to lift the UI */
+body {
+  background-image: linear-gradient(180deg, rgba(2,132,199,0.03), transparent 40%);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 shadow-md hover:brightness-105 transition;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm text-white/90 bg-white/5 hover:bg-white/10 transition;
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.site-footer {
+  background: linear-gradient(180deg, rgba(2,6,23,0.02), rgba(2,6,23,0.01));
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.social-icon {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/6 text-white hover:bg-white/12 transition;
+}
