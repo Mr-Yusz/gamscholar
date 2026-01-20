@@ -11,6 +11,15 @@ const credentialsSchema = z.object({
   password: z.string().min(8),
 });
 
+// Log environment check on module load
+if (!process.env.NEXTAUTH_SECRET) {
+  console.error("❌ NEXTAUTH_SECRET is not defined!");
+}
+if (!process.env.NEXTAUTH_URL) {
+  console.error("❌ NEXTAUTH_URL is not defined!");
+}
+console.log("✅ NextAuth Config Loaded - URL:", process.env.NEXTAUTH_URL);
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: { 
