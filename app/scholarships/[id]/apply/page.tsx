@@ -20,10 +20,15 @@ export default async function ApplyPage({
 
   const scholarship = await prisma.scholarship.findUnique({
     where: { id },
-    select: { id: true, title: true, status: true },
+    select: { id: true, title: true, status: true, isExternal: true },
   });
 
   if (!scholarship || scholarship.status !== "PUBLISHED") notFound();
+
+  // Block applications for external scholarships
+  if (scholarship.isExternal) {
+    redirect(`/scholarships/${id}`);
+  }
 
   const application = await prisma.application.upsert({
     where: {

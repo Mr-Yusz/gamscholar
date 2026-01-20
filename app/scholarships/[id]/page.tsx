@@ -64,6 +64,37 @@ export default async function ScholarshipDetailsPage({
 
   return (
     <div className="space-y-6">
+      {scholarship.isExternal && (
+        <div className="rounded-3xl border-2 border-red-500 bg-red-50 p-6 dark:border-red-700 dark:bg-red-900/20">
+          <div className="flex items-start gap-3">
+            <svg className="mt-0.5 h-6 w-6 flex-shrink-0 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              <h3 className="font-bold text-red-900 dark:text-red-100">
+                ⚠️ EXTERNAL SCHOLARSHIP - NOT AFFILIATED WITH GAMSCHOLAR
+              </h3>
+              <p className="mt-2 text-sm text-red-800 dark:text-red-200">
+                This scholarship is listed for informational purposes only. GamScholar is NOT affiliated with this scholarship program and does NOT process applications for it. You must apply directly through the scholarship provider's official website.
+              </p>
+              {scholarship.externalApplicationUrl && (
+                <a
+                  href={scholarship.externalApplicationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 rounded-2xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
+                >
+                  Apply on Official Website
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-black">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -80,18 +111,23 @@ export default async function ScholarshipDetailsPage({
                   </span>
                 </>
               ) : null}
+              {scholarship.isExternal && (
+                <span className="ml-2 rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-800 dark:bg-red-900/30 dark:text-red-200">
+                  EXTERNAL
+                </span>
+              )}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {session?.user && isStudent ? (
+            {!scholarship.isExternal && session?.user && isStudent ? (
               <SaveScholarshipButton
                 scholarshipId={scholarship.id}
                 initialSaved={initialSaved}
               />
             ) : null}
 
-            {isStudent && session?.user ? (
+            {!scholarship.isExternal && isStudent && session?.user ? (
               existingApplication ? (
                 // If application is a draft, let student continue; otherwise let them track
                 existingApplication.status === "DRAFT" ? (
@@ -121,14 +157,23 @@ export default async function ScholarshipDetailsPage({
                   Applications available for students
                 </span>
               )
-            ) : (
+            ) : scholarship.isExternal && scholarship.externalApplicationUrl ? (
+              <a
+                href={scholarship.externalApplicationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-2xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
+              >
+                Apply Externally →
+              </a>
+            ) : !scholarship.isExternal ? (
               <Link
                 href="/auth/login"
                 className="rounded-2xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80"
               >
                 Login to apply
               </Link>
-            )}
+            ) : null}
           </div>
         </div>
 

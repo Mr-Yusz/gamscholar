@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="site-footer mt-12">
@@ -7,11 +9,20 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold">GS</div>
-              <div>
-                <div className="text-lg font-semibold text-zinc-900 dark:text-white">GamScholar</div>
-                <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Connecting students with scholarship opportunities.</div>
-              </div>
+              <Link href="/" className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-r from-blue-700 to-blue-900 text-white">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15 8H9L12 2Z" fill="currentColor" opacity="0.9" />
+                    <path d="M12 22L9 16H15L12 22Z" fill="currentColor" opacity="0.7" />
+                    <path d="M2 12L8 15V9L2 12Z" fill="currentColor" opacity="0.6" />
+                    <path d="M22 12L16 9V15L22 12Z" fill="currentColor" opacity="0.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-lg font-semibold text-zinc-900 dark:text-white">GamScholar</div>
+                  <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Connecting students with scholarship opportunities.</div>
+                </div>
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">
