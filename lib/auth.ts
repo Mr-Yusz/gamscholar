@@ -78,5 +78,3 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/login",
   },
 };
-
-export const nextAuthHandler = NextAuth(authOptions);
